@@ -1,4 +1,4 @@
-DjangoREST  PEP8 Celery Redis Postgres
+
 ## Почти выполнил закончил API, но вакансия ушла в архив, поэтому не настроил celery, а так API полностью рабочее.
 # **Тестовое задание web-программист Python** (Middle)
 
