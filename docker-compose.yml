@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  django:
+    restart: always
+    build:
+      context: ./webapp
+    container_name: django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/app
+    ports:
+    - 8000:8000
+    command: >
+      sh -c "
+      python3 ./src/manage.py runserver 0.0.0.0:8000
+      "
+  # python3 ./src/manage.py refreshlocations && 
+
+  redis:
+    image: redis:latest
+
+  celery:
+    restart: always
+    build: 
+      context: ./webapp
+    command: celery -A celery worker --loglevel=info
+    depends_on:
+      - django
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "db01"
+      POSTGRES_USER: "void"
+      POSTGRES_PASSWORD: "voidFunction"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data: 
