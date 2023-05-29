@@ -14,7 +14,7 @@ CAR_SERIALIZER = CarSerializer()
 CARGO_SERIALIZER = CargoSerializer()
 ID = 'id'
 
-class CarPatchAPIView(UpdateModelMixin, GenericViewSet):
+class CarPatchViewSet(UpdateModelMixin, GenericViewSet):
     """
         Редактирование машины по ID (локация (определяется по введенному zip-коду))
     """
@@ -194,9 +194,10 @@ class CargoNearestCarsAPIView(APIView):
     ( <= 450 миль и cargo.weight <= car.payload_capacity)) 
     """
     def get(self, request):
-        cargos = self.get_cargos()
-        cars = self.get_available_cars()
-        cargo_data = self.process_cargos(cargos, cars)
+        cargo_data = self.process_cargos(
+            self.get_cargos(), 
+            self.get_available_cars()
+        )
         return Response(cargo_data)
 
     @staticmethod

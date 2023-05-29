@@ -64,3 +64,11 @@
 
 - [x]  Фильтр списка грузов (вес, мили ближайших машин до грузов);
 - [x]  Автоматическое обновление локаций всех машин раз в 3 минуты (локация меняется на другую случайную).
+
+
+docker-compose --build
+docker-compose run django python ./src/manage.py makemigrations
+docker-compose run django python ./src/manage.py migrate
+docker-compose run django python ./src/manage.py initlocationsdata
+docker-compose run django python ./src/manage.py initcarsdata
+“
