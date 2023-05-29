@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from app.models import Location
-from src.settings import BASE_DIR
+from proj.settings import BASE_DIR
 
 import pandas as pd
 
@@ -11,15 +11,10 @@ class Command(BaseCommand):
         self.load_locations(self.csv_file_name)
 
     def load_locations(self, csv_file):
-        self.clear_locations()
         locations = self.read_csv(csv_file)
         self.save_locations(locations)
         
         print(f'Локации из файла {self.csv_file_name} были успешно загружены')
-
-    @staticmethod
-    def clear_locations():
-        Location.objects.all().delete()
 
     @staticmethod
     def read_csv(csv_file):

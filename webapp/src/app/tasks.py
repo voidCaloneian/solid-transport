@@ -1,4 +1,4 @@
-from src.celery import app
+from proj.celery import app
 
 from .models import Car, Location
 
