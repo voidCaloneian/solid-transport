@@ -19,10 +19,12 @@ services:
       "
 
   redis:
+    ontainer_name: redis
     image: redis:latest
 
   celery:
     restart: always
+    ontainer_name: celery
     build: 
       context: ./webapp
     command: celery -A celery worker --loglevel=info
