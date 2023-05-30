@@ -27,6 +27,7 @@ class CargoViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Generi
     """
     CRUD операции для модели Cargo
     """
+    serializer_class = CargoSerializer
     queryset = Cargo.objects.all()
     lookup_field = ID
 
@@ -48,7 +49,9 @@ class CargoViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Generi
         return cargo_data
 
     def get_car_distances(self, cargo):
-        cars = Car.objects.filter()
+        cars = Car.objects.filter(
+            payload_capacity__gte=cargo.weight
+        )
         car_distances = []
 
         for car in cars:
@@ -82,7 +85,7 @@ class CargoFilterAPIView(APIView):
 
         try:
             cargos = self.filter_cargos_by_weight(min_weight, max_weight)
-            cars = self.get_cars_by_payload_capacity(min_weight, max_weight)
+            cars = self.get_cars_by_payload_capacity(min_weight)
         except ValueError:
             raise ValidationError('Минимальный и максимальный вес должен быть в диапазоне от 1 и до 1000')
 
@@ -99,10 +102,9 @@ class CargoFilterAPIView(APIView):
         )
 
     @staticmethod
-    def get_cars_by_payload_capacity(min_weight, max_weight):
+    def get_cars_by_payload_capacity(min_weight,):
         return Car.objects.filter(
-            payload_capacity__gte=min_weight,
-            payload_capacity__lte=max_weight
+            payload_capacity__gte=min_weight
         ).select_related('current_location')
 
     def cargos_set_and_find_nearest_cars(self, cargos, cars, max_distance):

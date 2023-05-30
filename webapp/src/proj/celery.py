@@ -18,6 +18,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'refresh_locations': {
         'task': 'proj.tasks.update_all_cars_locations',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/3'),
     },
 }
