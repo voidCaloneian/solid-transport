@@ -2,11 +2,11 @@
 ## Установка проекта
 
 ```code
-    git clone https://github.com/voidCaloneian/solid-transport.git
-    cd solid-transport
-    docker-compose build
-    docker-compose run django sh -c “python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py initlocationsdata && python3 ./src/manage.py initcarsdata“ && docker-compose up 
-    echo !
+git clone https://github.com/voidCaloneian/solid-transport.git
+cd solid-transport
+docker-compose build
+docker-compose run django sh -c “python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py initlocationsdata && python3 ./src/manage.py initcarsdata“ && docker-compose up 
+echo !
 ```
 
 # Добавленные команды
