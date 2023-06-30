@@ -1,4 +1,5 @@
 from rest_framework.mixins import  CreateModelMixin, UpdateModelMixin, DestroyModelMixin
+from rest_framework.generics import UpdateAPIView
 from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
@@ -14,7 +15,7 @@ CAR_SERIALIZER = CarSerializer()
 CARGO_SERIALIZER = CargoSerializer()
 ID = 'id'
 
-class CarPatchViewSet(UpdateModelMixin, GenericViewSet):
+class CarPatchAPIView(UpdateAPIView):
     """
         Редактирование машины по ID (локация (определяется по введенному zip-коду))
     """
