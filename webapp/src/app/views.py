@@ -11,8 +11,6 @@ from .models import Car, Cargo
 
 
 MAX_EARTH_DISTANCE_LENGTH = 999999
-CAR_SERIALIZER = CarSerializer()
-CARGO_SERIALIZER = CargoSerializer()
 ID = 'id'
 
 class CarPatchAPIView(UpdateAPIView):
@@ -44,7 +42,7 @@ class CargoViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Generi
     def get_cargo_data(self, cargo):
         car_distances = self.get_car_distances(cargo)
         cargo_data = {
-            **CARGO_SERIALIZER.to_representation(cargo),
+            **CargoSerializer().to_representation(cargo),
             'car_distances': car_distances
         }
         return cargo_data
@@ -66,7 +64,7 @@ class CargoViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, Generi
             else:
                 distance = 'Текущее местоположение автомобиля неизвестно'
             car_info = {
-                **CAR_SERIALIZER.to_representation(car),
+                **CarSerializer().to_representation(car),
                 'distance_to_cargo': distance
             }
             car_distances.append(car_info)
@@ -171,7 +169,7 @@ class CargoFilterAPIView(APIView):
     def build_nearest_car_info(nearest_car, nearest_car_distance):
         if nearest_car:
             return {
-                **CAR_SERIALIZER.to_representation(nearest_car),
+                **CarSerializer().to_representation(nearest_car),
                 'distance_to_cargo': nearest_car_distance
             }
         else:
@@ -183,10 +181,10 @@ class CargoFilterAPIView(APIView):
     @staticmethod
     def build_cargo_info(cargo, cars_in_distance, nearest_car_info):
         return {
-            **CARGO_SERIALIZER.to_representation(cargo),
+            **CargoSerializer().to_representation(cargo),
             'nearest_car': nearest_car_info,
             'cars_in_distance': [
-                CAR_SERIALIZER.to_representation(car) for car in cars_in_distance
+                CarSerializer().to_representation(car) for car in cars_in_distance
             ]
         }
 
@@ -265,7 +263,7 @@ class CargoNearestCarsAPIView(APIView):
     @staticmethod
     def build_cargo_info(cargo, nearest_cars_count):
         cargo_info = {
-            **CARGO_SERIALIZER.to_representation(cargo),
+            **CargoSerializer().to_representation(cargo),
             'nearest_cars_count': nearest_cars_count,
         }
         return cargo_info
