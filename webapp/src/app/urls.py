@@ -5,7 +5,7 @@ from django.urls import include, path
 from .views import (
     CargoFilterAPIView,
     CargoNearestCarsAPIView,
-    CarPatchViewSet,
+    CarPatchAPIView,
     CargoViewSet,
 )
 
@@ -14,7 +14,7 @@ router = DefaultRouter()
 router.register('cargo', CargoViewSet, basename='cargo')
 
 car_urls = [
-    path('patch/<int:id>/', CarPatchViewSet.as_view({'patch': 'partial_update'}), name='car-patch'),
+    path('patch/<int:id>/', CarPatchAPIView.as_view(), name='car-patch'),
 ]
 
 cargo_urls = [
